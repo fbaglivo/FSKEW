@@ -1,18 +1,27 @@
-% v23112016
+% v24112016
 %
 %
 % This script takes binding a feature condition for faces stimulus during
 % retrieval stage and calculate MI using Skewness technique. 
 % The last 512 samples are selected for the analysis.
 % Thi script works toghether with Skew fit R script
+%
+% It is prepeared for n electrodes analysis using random electrodes
+% or pre defined electrodes
+% It can do Normal, trial shuffle or data shuffle run
+%
 % Adapted by Fabricio Baglivo 2016 from Sergio Lew script.
 
 clear all
 close all
 clc
 
-electrode_run_type='random_electrodes'; %selected_electrodes 
-data_run_type='normal';%trial_shuffle %data_shuffle
+electrode_run_type='selected_electrodes'; %'random_electrodes'; %selected_electrodes 
+data_run_type= 'normal'; %'normal';%trial_shuffle %data_shuffle
+electrode_number=90;
+electrode_selected_number=10;
+
+electrodes=[1 2 3 ];  %Case of selected electrodes
 
 stage='PostRetention'
 
@@ -27,10 +36,208 @@ setenv('PATH', [getenv('PATH') ';C:\Program Files\R\R-3.3.2\bin\']);
 system('rm CSV/*');
 
 
-%%
 
-electrode_number=90;
-electrode_selected_number=10;
+%%
+trials=size(BindinERPs_RED,3);
+
+
+switch electrode_run_type
+    
+    case 'random_electrodes'
+   
+        switch data_run_type
+        
+            case 'normal'              
+
+                ok=0;
+                
+                while ok==0
+                    
+                    vector=randperm(electrode_number);
+                    selection=vector(1:electrode_selected_number);
+                    
+                    for iter=1:trials
+                        
+                        
+                        Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+                        Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+                        
+                        
+                    end
+                    
+                    %Test independence bewteen signals
+                    if (rank(Bind)==electrode_selected_number) && (rank(Feat)==electrode_selected_number);ok=1;end;
+                    
+                end
+
+                
+            case 'trial_shuffle'
+                
+                ok=0;
+                
+                while ok==0
+                    
+                    vector=randperm(electrode_number);
+                    selection=vector(1:electrode_selected_number);
+                    
+                    for iter=1:trials
+                        
+                        
+                        Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+                        Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+                        
+                        
+                    end
+                    
+                    if (rank(Bind)==10) && (rank(Feat)==10);ok=1;end;
+                    
+                end
+                
+             
+                
+                %mix codition: Trial permutation
+                Complete=[Bind' Feat']';
+                idx=randperm(trials);
+                Complete_Shuffle=Complete(idx,:);
+                Bind=Complete(1:trials/2,:);
+                Feat=Complete(trials/2+1:trials,:);
+                
+               
+            case 'data_shuffle'
+
+               %data shuffle
+                
+                shufflevect=randperm(size(cond(1).data,2));
+                B=cond(1).data(:,shufflevect,:);
+                shufflevect=randperm(size(cond(2).data,2));
+                F=cond(1).data(:,shufflevect,:);
+                
+                BindinERPs_RED=B(:,512:end,:);
+                FeaturesERPs_RED=F(:,512:end,:);
+    
+                
+                ok=0;
+                
+                while ok==0
+                    
+                    vector=randperm(electrode_number);
+                    selection=vector(1:electrode_selected_number);
+                    
+                    for iter=1:trials
+                        
+                        
+                        Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+                        Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+                        
+                        
+                    end
+                    
+                    %Test independence bewteen signals
+                    if (rank(Bind)==electrode_selected_number) && (rank(Feat)==electrode_selected_number);ok=1;end;
+                    
+                end
+                
+        end
+        
+    case 'selected_electrodes'
+
+        
+        electrode_selected_number=size(electrodes,2)
+        selection=electrodes;
+        
+        switch data_run_type
+        
+            case 'normal'              
+
+                    
+                    
+                for iter=1:trials
+                    
+                    
+                    Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+                    Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+                    
+                    
+                end
+                
+                %Test independence bewteen signals
+                
+                if (rank(Bind)==size(Bind,2)) && (rank(Feat)==size(Feat,2))
+                   
+                    ok=1;
+                else
+                    
+                    error('Non-independent data matrix');
+                    
+                end
+                
+            case 'trial_shuffle'
+                
+                                        
+              for iter=1:trials
+                   
+                Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+                Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+              end
+                
+                
+                
+                if (rank(Bind)==size(Bind,2)) && (rank(Feat)==size(Feat,2))
+                      
+                    ok=1;
+                else
+                    
+                    error('Non-independent data matrix');
+                    
+                end
+                
+                
+                %mix codition: Trial permutation
+                Complete=[Bind' Feat']';
+                idx=randperm(trials);
+                Complete_Shuffle=Complete(idx,:);
+                Bind=Complete(1:trials/2,:);
+                Feat=Complete(trials/2+1:trials,:);
+                
+               
+            case 'data_shuffle'
+
+               %data shuffle
+                
+                shufflevect=randperm(size(cond(1).data,2));
+                B=cond(1).data(:,shufflevect,:);
+                shufflevect=randperm(size(cond(2).data,2));
+                F=cond(1).data(:,shufflevect,:);
+                
+                BindinERPs_RED=B(:,512:end,:);
+                FeaturesERPs_RED=F(:,512:end,:);
+    
+                
+                
+                for iter=1:trials
+                    
+                    
+                    Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+                    Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+                    
+                    
+                end
+                
+                
+                
+                if (rank(Bind)==size(Bind,2)) && (rank(Feat)==size(Feat,2))
+                   
+                   
+                    ok=1;
+                else
+                    
+                    error('Non-independent data matrix');
+                    
+                end
+                
+        end
+        
+end
 
 % FIT vector:
 %
@@ -42,28 +249,28 @@ electrode_selected_number=10;
 fit_size=2*electrode_selected_number+sum([1:1:electrode_selected_number])+1;
 
 %%
-trials=size(BindinERPs_RED,3);
-
-ok=0;
-
-while ok==0
-
-    vector=randperm(electrode_number);
-    selection=vector(1:electrode_selected_number);
-    
-    for iter=1:trials
-
-
-        Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
-        Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
-
-
-    end
-
-    %Test independence bewteen signals
-    if (rank(Bind)==electrode_selected_number) && (rank(Feat)==electrode_selected_number);ok=1;end;
-    
-end
+% trials=size(BindinERPs_RED,3);
+% 
+% ok=0;
+% 
+% while ok==0
+% 
+%     vector=randperm(electrode_number);
+%     selection=vector(1:electrode_selected_number);
+%     
+%     for iter=1:trials
+% 
+% 
+%         Bind(iter,:)=squeeze(mean(BindinERPs_RED(selection,:,iter),2));
+%         Feat(iter,:)=squeeze(mean(FeaturesERPs_RED(selection,:,iter),2));
+% 
+% 
+%     end
+% 
+%     %Test independence bewteen signals
+%     if (rank(Bind)==electrode_selected_number) && (rank(Feat)==electrode_selected_number);ok=1;end;
+%     
+% end
 
 csvwrite(['CSV/Binding.csv'],Bind);
 csvwrite(['CSV/Features.csv'],Feat);
