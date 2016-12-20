@@ -42,16 +42,18 @@ system('rm CSV/*');
 trials=size(BindinERPs_RED,3);
 
 
-for t=1
+for t=1:10
     
     u_high=0.9; %Features
     b_high=0.3; 
-    d_high=0.1;
+    d_high=0.3;
     
     
-    u_low=t/10; %Binding
+    u_low=0.4; %Binding
+    u_bkp(t)=u_low;
+%     u_low=0.1;
     b_low=0.3;
-    d_low=0.1;
+    d_low=0.3;
 
     switch electrode_run_type
         
@@ -262,12 +264,14 @@ for t=1
             u=u_low;
             b=b_low;d=d_low; % symetrical system
             signal=henongen_func(u,b,d,tipo);
-            signal(:,1)=signal(:,1)-mean(signal(:,1));
-            signal(:,2)=signal(:,2)-mean(signal(:,2));
+%             signal(:,1)=signal(:,1)-mean(signal(:,1));
+%             signal(:,2)=signal(:,2)-mean(signal(:,2));
+             signal_low=signal;
             
             for i=1:65%ceil(size(signal,1)/512)-1
                 
                 BindinERPs_RED(:,:,i)=signal((i-1)*512+1:i*512,:)';
+%                 BindinERPs_RED(:,:,i)=signal(1:512,:)';
                 Bind(i,:)=squeeze(mean(BindinERPs_RED(:,:,i),2));
                 
             end
@@ -278,13 +282,14 @@ for t=1
             u=u_high;
             b=b_high;d=d_high; % Symetrical system
             signal=henongen_func(u,b,d,tipo);
-            signal(:,1)=signal(:,1)-mean(signal(:,1));
-            signal(:,2)=signal(:,2)-mean(signal(:,2));
+%             signal(:,1)=signal(:,1)-mean(signal(:,1));
+%             signal(:,2)=signal(:,2)-mean(signal(:,2));
             
             
             for i=1:65%ceil(size(signal,1)/512)-1
                 
                 FeaturesERPs_RED(:,:,i)=signal((i-1)*512+1:i*512,:)';
+%                 FeaturesERPs_RED(:,:,i)=signal(1:512,:)';
                 Feat(i,:)=squeeze(mean(FeaturesERPs_RED(:,:,i),2));
                 
             end
@@ -317,13 +322,13 @@ for t=1
     
     
     !Rscript skewNromalFitBind.R
-    snParam = csvread('skewNromalFitedDataBind.csv');
+    snParamBind = csvread('skewNromalFitedDataBind.csv');
     % snParam(snParam==-999999)=NaN;
     !Rscript skewNromalFitFeat.R
-    snParamBind = csvread('skewNromalFitedDataFeat.csv');
+    snParamFeat = csvread('skewNromalFitedDataFeat.csv');
     % snParamBind(snParam==-999999)=NaN;
     !Rscript  skewNromalFit.R
-    snParamFeat = csvread('skewNromalFitedData.csv');
+    snParam = csvread('skewNromalFitedData.csv');
     % snParamFeat(snParamGO==-999999)=NaN;
     
     %%
@@ -334,6 +339,8 @@ for t=1
         alfaend=alfainit+electrode_selected_number-1;
         
         alfa=snParam(n,alfainit:alfaend);
+        
+        likelihood(t)=snParam(end);
         
         init=electrode_selected_number+1;
         for i=1:electrode_selected_number %for 10 channels
@@ -358,6 +365,9 @@ for t=1
         
         alfaBind=snParamBind(n,alfainit:alfaend);
         
+        
+        likelihoodbind(t)=snParamBind(end);
+        
         init=electrode_selected_number+1;
         for i=1:electrode_selected_number
             
@@ -381,6 +391,7 @@ for t=1
         
         alfaFeat=snParamFeat(n,alfainit:alfaend);
         
+        likelihoodFeat(t)=snParamFeat(end);
         init=electrode_selected_number+1;
         for i=1:electrode_selected_number %for 10 channels
             
