@@ -17,7 +17,7 @@ function signal=henongen_func(u,b,d,tipo)
 % Fabricio Baglivo 2016
 
 x1=0;
-x2=0
+x2=0;
 % 
 % u=0.6;  % Coupling Strengh
 % 
