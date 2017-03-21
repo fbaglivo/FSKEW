@@ -1,0 +1,65 @@
+<HEAD><TITLE>Owen's function</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Owen's function</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+T_Owen(h, a, jmax, cut_point)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>h</CODE>
+<TD>
+a numerical vector. Missing values (<CODE>NaN</CODE>s) and <CODE>Inf</CODE> are allowed.
+
+<TR VALIGN=TOP><TD><CODE>a</CODE>
+<TD>
+a numerical scalar. <CODE>Inf</CODE> is allowed.
+
+<TR VALIGN=TOP><TD><CODE>jmax</CODE>
+<TD>
+an integer scalar value which regulates the accuracy of the result (default is 50). See Details below for explanation.
+
+<TR VALIGN=TOP><TD><CODE>cut_point</CODE>
+<TD>
+a scalar value which regulates the behaviour of the algorithm (default is 6).
+See Details below for explanation.
+</TABLE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Evaluates funtion T(h,a) studied by D.B.Owen<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+If <CODE>a&gt;1</CODE> and <CODE>0&lt;h&lt;=cut_point</CODE>, a series expansion is used,
+truncated after <CODE>jmax</CODE> terms.
+If <CODE>a&gt;1</CODE> and <CODE>h&gt;cut_point</CODE>, an asymptotic approximation is used.
+In the other cases, various reflection properties of the function
+are exploited. See the reference below for more information.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a numerical vector<h2><FONT FACE="Courier New,Courier" COLOR="#666666">BACKROUND</FONT></h2>
+
+The function T(h,a) is useful for the computation of the bivariate
+normal distribution function and related quantities.
+See the reference below for more information.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Owen, D. B. (1956).
+Tables for computing bivariate normal probabilities.
+<EM>Ann. Math. Statist.</EM>
+<B>27</B>, 1075-1090.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="pnorm2.html">pnorm2</A></CODE>, <CODE><A HREF="dsn.html">psn</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+owen &#61 T_Owen(1:10, 2)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

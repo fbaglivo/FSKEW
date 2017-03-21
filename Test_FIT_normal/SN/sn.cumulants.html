@@ -1,0 +1,50 @@
+<HEAD><TITLE>Cumulants of the skew-normal distribution</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">cumulants of the skew-normal distribution</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+sn_cumulants(shape, n)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>shape</CODE>
+<TD>
+a vector of shape parameter (default is 0).
+<TR VALIGN=TOP><TD><CODE>n</CODE>
+<TD>
+a scalar integer (default is 4).
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+cumulants of the skew-normal distribution<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+The moment generating function (hence the cumulant generating function)
+of the distribution is given in the refence below.
+The computations method used here is unproved analytically but it is
+seen to behave correctly up to the order which was checked (<CODE>n=8</CODE>).<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+the cumulants up to order <CODE>n</CODE> of the skew-normal distribution
+with <CODE>location=0</CODE>, <CODE>scale=1</CODE> and <CODE>shape</CODE> as selected<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. (1985).
+A class of distributions which includes the normal ones.
+<EM>Scand. J. Statist.</EM>
+<B>12</B>, 171-178.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="dsn.html">dsn</A></CODE>, <CODE><A HREF="zeta.html">zeta</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+cum &#61 sn_cumulants([0,1,2,5,10],4)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

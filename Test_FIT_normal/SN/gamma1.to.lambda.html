@@ -1,0 +1,51 @@
+<HEAD><TITLE>Converts skewness to shape parameter of skew-normal distribution</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Converts skewness to shape parameter of skew-normal distribution</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+gamma1_to_lambda(gamma1)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>gamma1</CODE>
+<TD>
+a numeric vector of indices of skewness.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+For a given value of the index of skewness (standardized third
+cumulant), the function finds the corresponding shape parameter
+of a skew-normal distribution.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+Feasible values for input must have <CODE>abs(gamma1)&lt;0.5*(4-pi)*(2/(pi-2))^1.5</CODE>,
+which is about 0.99527.
+If some values of <CODE>gamma1</CODE> are not in the feasible region, a warning
+message is issued, and <CODE>NaN</CODE>s are returned.
+<P>
+See the reference below for the expression of the index of skewnnes
+of a skew-normal distribution.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a numeric vector of the corresponding shape parameters.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. (1985).
+A class of distributions which includes the normal ones.
+<EM>Scand. J. Statist.</EM>
+<B>12</B>, 171-178.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="dsn.html">dsn</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

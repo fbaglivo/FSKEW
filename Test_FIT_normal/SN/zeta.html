@@ -1,0 +1,50 @@
+<HEAD><TITLE>Function `log(2*P(x))' and its derivatives</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Function `log(2*P(x))' and its derivatives</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+zeta(k, x)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>k</CODE>
+<TD>
+an integer scalar.
+
+<TR VALIGN=TOP><TD><CODE>x</CODE>
+<TD>
+a vector. Missing values (<CODE>NaN</CODE>s) are allowed, but <CODE>Inf</CODE>s are not.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+The function <CODE>log(2 P(x))</CODE> and its derivatives up to order 4,
+if P(x) denotes the standard normal distribution function.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+<CODE>k</CODE> denotes the order of the derivative. If <CODE>k</CODE> is 0, the function
+is evaluated, using <CODE>normcdf(x)</CODE> for <CODE>x&gt;-35</CODE>,  an asymptotic expansion
+otherwise. For <CODE>k</CODE> between 1 and 4, the derivative of that order is
+evaluated. For <CODE>k&gt;4</CODE>, a warning message is issued, and a vector of
+<CODE>NaN</CODE>s is returned.
+<P>
+This function is used by <CODE>sn_dev</CODE> and <CODE>msn_dev</CODE>, among others.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a vector; this is the <CODE>k</CODE>-th order derivative evaluated at <CODE>x</CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="sn.mle.html">sn_mle</A></CODE>, <CODE><A HREF="msn.mle.html">msn_mle</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+y &#61 zeta(2,[-20:0.5:20])
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

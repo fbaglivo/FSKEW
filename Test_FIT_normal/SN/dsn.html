@@ -1,0 +1,95 @@
+<HEAD><TITLE>Skew-Normal Distribution</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Skew-Normal Distribution</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+dsn(x, location, scale, shape)
+psn(q, location, scale, shape)
+qsn(p, location, scale, shape, tol)
+rsn(n, location, scale, shape)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>x</CODE>
+<TD>
+vector of quantiles. Missing values (<CODE>NaN</CODE>s) are allowed.
+
+<TR VALIGN=TOP><TD><CODE>q</CODE>
+<TD>
+vector of quantiles. Missing values (<CODE>NaN</CODE>s) are allowed.
+
+<TR VALIGN=TOP><TD><CODE>p</CODE>
+<TD>
+vector of probabilities. Missing values (<CODE>NaN</CODE>s) are allowed.
+<TR VALIGN=TOP><TD><CODE>location</CODE>
+<TD>
+vector of location parameters (default is 0).
+
+<TR VALIGN=TOP><TD><CODE>scale</CODE>
+<TD>
+vector of (positive) scale parameters (default is 1).
+
+<TR VALIGN=TOP><TD><CODE>shape</CODE>
+<TD>
+vector of shape parameters (default is 0). With <CODE>psn</CODE> and `qsn", it must be of length 1.
+
+<TR VALIGN=TOP><TD><CODE>n</CODE>
+<TD>
+sample size (default is 1).
+
+<TR VALIGN=TOP><TD><CODE>tol</CODE>
+<TD>
+a scale value which regulates the accuracy of the result (default is 1e-8).
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Density function, distribution function, quantiles and random number
+generation for the skew-normal (SN) distribution.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+<CODE>psn</CODE> make use of function <CODE>T_Owen</CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+density (<CODE>dsn</CODE>), probability (<CODE>psn</CODE>),
+quantile (<CODE>qsn</CODE>) or  random sample (<CODE>rsn</CODE>)
+from the skew-normal distribution with given <CODE>location</CODE>, <CODE>scale</CODE>
+and <CODE>shape</CODE> parameters.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">BACKGROUND</FONT></h2>
+
+The family of skew-normal distributions is an extension of the normal
+family, via the introdution of a <CODE>shape</CODE> parameter which regulates
+skewness; when <CODE>shape=0</CODE>, the skew-normal distribution reduces to the
+normal one.  The density of the SN distribution when <CODE>location=0</CODE>
+and <CODE>scale=1</CODE> is <CODE>2*dnorm(x)*pnorm(shape*x)</CODE>.
+A multivariate version of the distribution exists.
+See the references below for additional information.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. (1985).
+A class of distributions which includes the normal ones.
+<EM>Scand. J. Statist.</EM>
+<B>12</B>, 171-178.
+<P>
+Azzalini, A. and Dalla Valle, A. (1996).
+The multivariate skew-normal distribution.
+<EM>Biometrika</EM>
+<B>83</B>, 715-726.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="T.Owen.html">T_Owen</A></CODE>, <CODE><A HREF="dmsn.html">dmsn</A></CODE>, <CODE><A HREF="sn.mle.html">sn_mle</A></CODE> 
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+pdf &#61 dsn([-3:0.1:3],0,1,3)
+cdf &#61 psn([-3:0.1:3],0,1,3)
+qu &#61 qsn([0.1:0.1:0.9],0,1,-2)
+rn &#61 rsn(100, 5, 2, 5)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

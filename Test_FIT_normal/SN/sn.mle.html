@@ -1,0 +1,125 @@
+<HEAD><TITLE>Maximum likelihood estimation for skew-normal models</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Maximum likelihood estimation for skew-normal models</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+sn_mle(X, y, cp, plotit, traceout, iter_max, abs_tol)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+
+<TR VALIGN=TOP><TD><CODE>y</CODE>
+<TD>
+a vector contaning the observed variable. This is the response
+variable in case of linear regression. Missing values (NaN) are not
+allowed.
+
+<TR VALIGN=TOP><TD><CODE>X</CODE>
+<TD>
+a matrix of explanatory variables. If X is missing, then a
+one-column matrix of all 1's is created. If X is supplied, and an
+intercept term is required, then it must include a column of 1's.
+Missing values (NaN) are not allowed.
+
+<TR VALIGN=TOP><TD><CODE>cp</CODE>
+<TD>
+a vector of initial values for the centred parameters, with
+length(cp)=size(X,2)+2
+
+<TR VALIGN=TOP><TD><CODE>plotit</CODE>
+<TD>
+logical value, If plotit=1 (default)  a plot of the nonparametric 
+estimate of variable y (or the residuals, in the case of regression),
+and the parametric fit is superimposed. See below for details.
+
+<TR VALIGN=TOP><TD><CODE>traceout</CODE>
+<TD>
+logical value which controls printing of the algorithm
+convergence. If traceout=1, details are printed. Default value is 0.
+
+<TR VALIGN=TOP><TD><CODE>iter_max</CODE>
+<TD>
+this parameter is passed to the optimizer routine and
+represent the maximum number of iterations (default is 100);
+see the documentation of 'foptions' for its usage.
+
+<TR VALIGN=TOP><TD><CODE>abs_tol</CODE>
+<TD>
+this parameter is passed to the optimizer routine and
+represent the absolute tolerance (default is 1e-5);
+see the documentation of 'foptions' for its usage.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Fits a skew-normal (SN) distribution to data, or fits a
+linear regression model with skew-normal errors,
+using maximum likelihood estimation.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+The optimizer routine 'constr' is used, supplying gradient.
+Convergence is generally fast and reliable, but inspection of the
+returned message from 'options' is always appropriate. In suspect cases,
+re-run the function changing the starting cp vector.
+<P>
+If plotting operates, an histogram is plotted.
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a list containing the following components:<P>
+<TABLE>
+
+<TR VALIGN=TOP><TD><CODE>cp</CODE>
+<TD>
+a vector of length size(X,2)+2 with the centred parameters.
+<TR VALIGN=TOP><TD><CODE>logL</CODE>
+<TD>
+the log-likelihood at convergence
+<TR VALIGN=TOP><TD><CODE>se</CODE>
+<TD>
+a vector of standard errors for the cp component.
+<TR VALIGN=TOP><TD><CODE>info</CODE>
+<TD>
+the observed information matrix for the cp component.
+<TR VALIGN=TOP><TD><CODE>options</CODE>
+<TD>
+messages from the optimisation routine; see the documentation
+of <CODE>foptions</CODE> for explanation of its components.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">BACKGROUND</FONT></h2>
+
+Background information on the SN distribution is given by Azzalini
+(1985). See  Azzalini and Capitanio (1998) for a more detailed
+discussion of the centred parametrization.
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. (1985). A class of distributions which includes the normal
+ones. <EM>Scand. J. Statist.</EM> <B>12</B>, 171-178.
+<P>
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B
+</EM>
+<B>61</B>, part 3.
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="dsn.html">dsn</A></CODE>, <CODE><A HREF="msn.mle.html">msn_mle</A></CODE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+a &#61 sn_mle(NaN,bmi)
+#
+a &#61 sn_mle([ones(length(lbm),1),lbm,lbm^2],bmi)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

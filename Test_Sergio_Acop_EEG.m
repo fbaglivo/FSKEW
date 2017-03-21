@@ -8,14 +8,14 @@ data_run_type= 'data_shuffle'; %'normal';%trial_shuffle %data_shuffle
 % electrode_number=90;
 % electrode_selected_number=10; 
 
-electrodes=[1 11];  %Case of selected electrodes
+electrodes=[1:2:90];  %Case of selected electrodes
 
 stage='Retention'
 
 load(['P12/' stage '.mat']);
 
-BindinERPs_RED_temp=cond(1).data(:,1:100,:); %512:end ; retention stage
-FeaturesERPs_RED_temp=cond(2).data(:,1:100,:);
+BindinERPs_RED_temp=cond(1).data(:,512:end,:); %1:100; retention baseline - 512:end ; retention stage
+FeaturesERPs_RED_temp=cond(2).data(:,512:end,:);
 
 complete_temp=cat(3,BindinERPs_RED_temp,FeaturesERPs_RED_temp);
 
@@ -31,7 +31,9 @@ FeaturesERPs_RED=FeaturesERPs_RED_temp;
 
 for t=1
     
-    %Shuffle
+    t
+    
+%%     Shuffle
 %     
 %     shufflevect=randperm(size(complete_temp,3));
 %     BindinERPs_RED=complete_temp(:,:,shufflevect(1:65));
@@ -66,9 +68,13 @@ for t=1
     
     Complete=[Bind' Feat'];
     
-    Hfeatnorm=0.25*log(det(cov(zscore(Feat))));
-    Hbindnorm=0.25*log(det(cov(zscore(Bind))));
-    Hnorm=0.5*log(det(cov(zscore(Complete'))));
+%     Hfeatnorm=0.25*log(det(cov(zscore(Feat))));
+%     Hbindnorm=0.25*log(det(cov(zscore(Bind))));
+%     Hnorm=0.5*log(det(cov(zscore(Complete'))));
+%     
+    Hfeatnorm=0.25*log(det(cov(Feat)));
+    Hbindnorm=0.25*log(det(cov(Bind)));
+    Hnorm=0.5*log(det(cov(Complete')));
     
     
     fit_size=2*electrode_selected_number+sum([1:1:electrode_selected_number])+1;

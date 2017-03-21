@@ -1,0 +1,124 @@
+<HEAD><TITLE>Fitting Skew-normal variables using the EM algorithm</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Fitting Skew-normal variables using the EM algorithm</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+sn_em(X, y, fixed, p_eps, l_eps, traceout, data)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>y</CODE>
+<TD>
+a vector contaning the observed variable. This is the response
+variable in case of linear regression.
+  
+<TR VALIGN=TOP><TD><CODE>X</CODE>
+<TD>
+a matrix of explanatory variables. If <CODE>X</CODE> is missing, then a one-column
+matrix of all 1's is created. If <CODE>X</CODE> is supplied, and an intercept term
+is required, then it must include a column of 1's.
+
+<TR VALIGN=TOP><TD><CODE>fixed</CODE>
+<TD>
+a vector of length 3, indicating which components of the
+parameter vector must be regarded as fixed. In <CODE>fixed=[NaN,NaN,NaN]</CODE>,
+which is the default setting, a global maximization is performed.
+If the 3rd component is given a value, then maximization is performed
+keeping that value fixed for the shape parameter. If the 3rd and 2nd
+parameters are fixed, then the scale and the shape parameter are
+kept fixed. No other patterns of the fixed values are allowed.
+
+<TR VALIGN=TOP><TD><CODE>p_eps</CODE>
+<TD>
+numerical value which regulates the parameter convergence
+tolerance (default is 0.0001).
+
+<TR VALIGN=TOP><TD><CODE>l_eps</CODE>
+<TD>
+numerical value which regulates the log-likelihood convergence
+tolerance (default is 0.01).
+
+<TR VALIGN=TOP><TD><CODE>traceout</CODE>
+<TD>
+logical value which controls printing of the algorithm
+convergence. If <CODE>traceout=1</CODE>, details are printed. Default value is 0.
+
+<TR VALIGN=TOP><TD><CODE>data</CODE>
+<TD>
+logical value. If <CODE>data=1</CODE>, the returned list includes the original
+data. Default value is <CODE>data=0</CODE>.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Fits a skew-normal (SN) distribution to data, or fits a linear regression
+model with skew-normal errors, using the EM algorithm to locate the MLE
+estimate. The estimation procedure can be global or it can fix some
+components of the parameters vector.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+The function works using the direct parametrization; on convergence,
+the output is then given in both parametrizations.
+<P>
+This function is based on the EM algorithm; it is generally quite slow,
+but it appears to be very robust.
+See <CODE>sn_mle</CODE> for an alternative method, which also returns standard
+errors.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a list with the following components:
+<P>
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>dp</CODE>
+<TD>
+a vector of the direct parameters, as explained in the references below.
+
+<TR VALIGN=TOP><TD><CODE>cp</CODE>
+<TD>
+a vector of the centred parameters, as explained in the references below.
+
+<TR VALIGN=TOP><TD><CODE>logL</CODE>
+<TD>
+the log-likelihood at convergence.
+
+<TR VALIGN=TOP><TD><CODE>data</CODE>
+<TD>
+optionally (if <CODE>data=1</CODE>), a list containing <CODE>X</CODE> and <CODE>y</CODE>, as supplied
+on input, and a vector of <CODE>residuals</CODE>, which should have an approximate
+SN distribution with <CODE>location=0</CODE> and <CODE>scale=1</CODE>, in the direct parametrization.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">BACKGROUND</FONT></h2>
+
+Background information on the SN distribution is given by Azzalini (1985).
+See  Azzalini and Capitanio (1998) for a more detailed discussion of
+the direct and centred parametrizations.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. (1985).
+A class of distributions which includes the normal ones.
+<EM>Scand. J. Statist.</EM>
+<B>12</B>, 171-178.
+<P>
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B</EM>
+<B>61</B>, part 3.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="dsn.html">dsn</A></CODE>, <CODE><A HREF="sn.mle.html">sn_mle</A></CODE>, <CODE><A HREF="cp.to.dp.html">cp_to_dp</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+ a &#61 sn_em(NaN,bmi)
+ #
+ a &#61 sn_em([ones(length(lbm),1),lbm,lbm.^2],bmi)
+ #
+ fit &#61 sn_em(NaN,y, [NaN, 2, 3], NaN, 0.001)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

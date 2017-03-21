@@ -1,0 +1,76 @@
+<HEAD><TITLE>Multivariate skew-normal distribution</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Multivariate skew-normal distribution</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+dmsn(x, xi, Omega, alpha)
+rmsn(n, xi, Omega, alpha)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>x</CODE>
+<TD>
+either a vector of length <CODE>k</CODE> or a matrix with <CODE>k</CODE> columns, where
+<CODE>k</CODE> is <CODE>length(alpha)</CODE>, giving the coordinates of the point(s)
+where the density must be avaluated.
+
+<TR VALIGN=TOP><TD><CODE>Omega</CODE>
+<TD>
+a covariance matrix of dimension <CODE>(k,k)</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>alpha</CODE>
+<TD>
+a numeric vector which regulates the shape of the density.
+
+<TR VALIGN=TOP><TD><CODE>xi</CODE>
+<TD>
+a numeric vector of lenght <CODE>k</CODE>, or a matrix with <CODE>k</CODE> columns,
+representing the location parameter of the distribution.
+If <CODE>xi</CODE> is a matrix, its dimensions must agree with those of <CODE>x</CODE> (defaults is
+ zeros(1,k)).
+
+<TR VALIGN=TOP><TD><CODE>n</CODE>
+<TD>
+a numeric value which represents the number of random vectors
+to be drawn (default is 1).
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Probability density function and random number generation
+for the multivariate skew-normal (MSN) distribution.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+A vector of density values (<CODE>dmsn</CODE>), or a matrix of random 
+points (<CODE>rmsn</CODE>).<h2><FONT FACE="Courier New,Courier" COLOR="#666666">BACKGROUND</FONT></h2>
+
+The multivariate skew-normal distribution is discussed by
+Azzalini and Dalla Valle (1996); the <CODE>(Omega,alpha)</CODE> parametrization
+adopted here is the one of Azzalini and Capitanio (1998).<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. and Dalla Valle, A. (1996).
+The multivariate skew-normal distribution.
+<EM>Biometrika</EM>
+<B>83</B>, 715-726.
+<P>
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B</EM>
+<B>61</B>, part 3.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+x &#61 linspace(-3,3,30)
+pdf &#61 dmsn([x',zeros(30,1)], [0,0], eye(2), [2,3])
+#
+rnd &#61 rmsn(50,[0,0], eye(2),[2,3])
+</PRE>
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+   

@@ -1,0 +1,138 @@
+<HEAD><TITLE>Maxmimum likelihood estimation for multivariate skew-normal distribution</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Maximum likelihood estimation for multivariate skew-normal distribution</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+msn_mle(X, y, freq, start, traceout, iter_max, x_tol)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+
+<TR VALIGN=TOP><TD><CODE>y</CODE>
+<TD>
+a matrix or a vector.  In <CODE>y</CODE> is a matrix, rows refer to
+observations, and columns to components of the multivariate
+distribution. In <CODE>y</CODE> is a vector, it is converted to a one-column
+matrix, and a scalar skew-normal distribution is fitted.
+
+<TR VALIGN=TOP><TD><CODE>X</CODE>
+<TD>
+a matrix of covariate values. If missing, a one-column matrix of
+1's is created; otherwise, it must have the same number of rows of <CODE>y</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>freq</CODE>
+<TD>
+a vector of weights.
+If missing, a one-column matrix of 1's is created; otherwise
+it must have the same number of rows of <CODE>y</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>start</CODE>
+<TD>
+a list contaning the components <CODE>beta</CODE>,<CODE>Omega</CODE>, <CODE>alpha</CODE>,
+of the type described below. The <CODE>dp</CODE> component of the returned
+list from a previous call has the required format.
+
+<TR VALIGN=TOP><TD><CODE>traceout</CODE>
+<TD>
+logical value which controls printing of the algorithm convergence.
+If <CODE>traceout=1</CODE>, details are printed. Default value is <CODE>0</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>iter_max</CODE>
+<TD>
+maximum number of iterations of the optimisation routine. Default is 150.
+
+<TR VALIGN=TOP><TD><CODE>x_tol</CODE>
+<TD>
+tolerance (default is 1e-8).
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Fits a multivariate skew-normal (MSN) distribution to data, or fits a
+linear regression model with multivariate skew-normal errors,
+using maximum likelihood estimation.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+The parameter <CODE>freq</CODE> is intended for use with grouped data,
+setting the values of <CODE>y</CODE> equal to the central values of the
+cells; in this case the resulting estimate is an approximation
+to the exact maximum likelihood estimate. If <CODE>freq</CODE> is not
+set, exact maximum likelihood estimation is performed.
+<P>
+The working parameter used in the maximization stage is
+<CODE>c(beta,alpha/omega)</CODE>, since a profile deviance (-2*log-likelihood)
+for this parameter is actually used;
+see Azzalini and Capitanio (1998) for details.
+The optimizer routine is called, supplying the gradient of the
+profile deviance. PP Although the function accepts a vector y as input,
+the use of <CODE>sn.mle</CODE> is recommended in the scalar case.
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a list containing the following components:
+<P>
+<TABLE>
+
+<TR VALIGN=TOP><TD><CODE>dp</CODE>
+<TD>
+a list containing the direct parameters <CODE>beta</CODE>, <CODE>Omega</CODE>, <CODE>alpha</CODE>.
+Here, <CODE>beta</CODE> is a matrix of regression coefficients with
+<CODE>size(beta)=[size(X,1),size(y,2))</CODE>, <CODE>Omega</CODE> is a covariance matrix of
+order <CODE>size(y,2)</CODE>, <CODE>alpha</CODE> is a vector of shape parameters of length <CODE>size(y,2)</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>se</CODE>
+<TD>
+a list containing the components <CODE>beta</CODE>, <CODE>alpha</CODE>, <CODE>info</CODE>.
+Here, <CODE>beta</CODE> and <CODE>alpha</CODE> are the standard errors for the
+corresponding point estimates;
+<CODE>info</CODE> is the observed information matrix for the working parameter,
+as explained below.
+
+<TR VALIGN=TOP><TD><CODE>options</CODE>
+<TD>
+messages from the optimisation routine; see the documentation
+of <CODE>foptions</CODE> for explanation of its components.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">BACKGROUND</FONT></h2>
+
+The multivariate skew-normal distribution is discussed by
+Azzalini and Dalla Valle (1996); the <CODE>(Omega,alpha)</CODE> parametrization
+adopted here is the one of Azzalini and Capitanio (1998).<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. and Dalla Valle, A. (1996).
+The multivariate skew-normal distribution.
+<EM>Biometrika
+</EM>
+<B>83</B>, 715-726.
+<P>
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B
+</EM>
+<B>61</B>, part 3.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="dmsn.html">dmsn</A></CODE>, <CODE><A HREF="sn.mle.html">sn_mle</A></CODE>, <CODE><A HREF="msn.fit.html">msn_fit</A></CODE>, <CODE>foptions</CODE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+# a simple case
+b &#61 msn_mle(NaN,[lbm,bmi,ssf])
+#
+# a regressione case
+a &#61 msn_mle([ones(length)lbm),1),lbm], bmi, NaN, NaN, NaN, NaN,1e-6)
+#
+# refine the previous outcome
+a1 &#61 msn.mle([ones(length)lbm),1),lbm], bmi, NaN, a_dp, NaN, NaN,1e-9)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

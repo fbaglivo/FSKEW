@@ -1,0 +1,82 @@
+clear all
+close all
+clc
+
+setenv('PATH', [getenv('PATH') ';C:\Program Files\R\R-3.3.2\bin\']);
+addpath('SN')
+
+
+%%
+
+electrode_selected_number=1;
+%%
+
+%for t=1
+    
+
+% Mu=[zeros(20000,electrode_selected_number)];
+% SIGMA=diag([ones(electrode_selected_number,1)],0);
+% Rb=mvnrnd(Mu,SIGMA);
+
+Rb=rsn(100000,4,8,100)';
+
+fit_size=2*electrode_selected_number+sum([1:1:electrode_selected_number])+1;
+
+csvwrite(['CSV/Binding.csv'],Rb);
+%     csvwrite(['CSV/Features.csv'],Feat);
+%     Complete=[Bind' Feat'];
+%     csvwrite(['CSV/Complete.csv'],Complete');
+    
+csvwrite(['CSV/FitSize.csv'],fit_size);
+    
+    %%
+    %!unset DYLD_LIBRARY_PATH; Rscript  skewNromalFitBind.R
+    
+!Rscript skewNromalFitBindtest.R
+snParamBind = csvread('skewNromalFitedDataBind.csv');
+%     % snParam(snParam==-999999)=NaN;
+%     !Rscript skewNromalFitFeat.R
+%     snParamFeat = csvread('skewNromalFitedDataFeat.csv');
+%     % snParamBind(snParam==-999999)=NaN;
+%     !Rscript  skewNromalFit.R
+%     snParam = csvread('skewNromalFitedData.csv');
+%     % snParamFeat(snParamGO==-999999)=NaN;
+%     
+    %%
+
+size(snParamBind,1)
+   
+alfainit=electrode_selected_number+sum([1:1:electrode_selected_number])+1;
+alfaend=alfainit+electrode_selected_number-1;
+
+ 
+xi=snParamBind(1,electrode_selected_number);
+alfa=snParamBind(1,alfainit:alfaend);
+
+likelihood=snParamBind(end);
+
+init=electrode_selected_number+1;
+for i=1:electrode_selected_number %for 10 channels
+    
+    l=electrode_selected_number-i ;% #components
+    
+    omega(i,i:electrode_selected_number)=snParamBind(1,init:(init+l));
+    omega(i:electrode_selected_number,i)=snParamBind(1,init:(init+l));
+    
+    init=(init+l+1);
+    
+end
+
+M=100000;
+a=randn(100000,1);
+b=randn(100000,1);
+W(find(sqrt(alfa*alfa')*a>b))=a(find(sqrt(alfa*alfa')*a>b));
+W(find(sqrt(alfa*alfa')*a<=b))=-a(find(sqrt(alfa*alfa')*a<=b));
+H = 1/2*log((det(omega))) + 1 + log(2*pi) - mean(2*log(normcdf(sqrt(alfa*alfa')*W)));
+
+%mean(2*log(normcdf(sqrt(alfa*alfa')*rsn(20000,0,1,sqrt(alfa*alfa')))))
+
+a=rsn(20000,xi,omega,alfa);
+hist(a,100);
+hold on
+hist(Rb,100,'r')

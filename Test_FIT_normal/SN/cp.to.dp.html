@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Conversion between equivalent parametrizations</TITLE>
+<META NAME="Template" CONTENT="C:\PROGRAMMI\MICROSOFT OFFICE\OFFICE\html.dot">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" ALINK="#FF0000">
+
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2 ALIGN="CENTER">Conversion between equivalent parametrizations</H2>
+<H2>Usage</H2>
+</FONT><PRE>
+cp_to_dp(param)
+dp_to_cp(param)</PRE>
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>Arguments</H2></FONT>
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>param</CODE>
+<TD>
+a vector of length al least three. If <CODE>lenght(param)</CODE> is <CODE>m+2</CODE>, then the first <CODE>m</CODE> components refer to the regression coefficients (or the location parameter, in case <CODE>m</CODE> is 1), and the remaining two components refer to scale and shape, respectively; their role is preserved across parametrizations. </TD>
+</TR>
+</TABLE>
+
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>Description</H2>
+</FONT><P>Convert direct to centred parameters of the skew-normal distribution, and viceversa</P>
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>Details</H2>
+</FONT><P>The advantages of using the centred parametrization, rather than the direct one, are discussed in the reference below.</P>
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>Value</H2>
+</FONT><P>a vector of the same length of <CODE>param</CODE>, representing <CODE>param</CODE> in the alternative parametrization; <CODE>cp_to_dp</CODE> converts centred to direct parameters, <CODE>dp_to_cp</CODE> converts direct to centred parameters.</P>
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>References</H2>
+</FONT><P>Azzalini, A. and Capitanio, A. (1999). Statistical applications of the multivariate skew-normal distribution. <EM>J.Roy.Statist.Soc. B</EM> <B>61</B>, part 3.</P>
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>See Also</H2>
+<A HREF="sn.mle.html"><FONT FACE="Courier New,Courier" SIZE=2>sn_mle</FONT></A>, <A HREF="sn.em.html"><FONT FACE="Courier New,Courier" SIZE=2>sn_em</FONT></A></P>
+<FONT FACE="Courier New,Courier" COLOR="#808080"><H2>Examples</H2>
+</FONT><PRE>
+cp &#61 dp_to_cp([30,30,2,4])
+dp &#61 cp_to_dp(cp)</PRE>
+<P><HR></P>
+<P><div align=center><A HREF="00Index.html">[Package Contents]</A> </P></BODY>
+</HTML>

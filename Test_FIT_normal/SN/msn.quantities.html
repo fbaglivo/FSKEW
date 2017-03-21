@@ -1,0 +1,98 @@
+<HEAD><TITLE>Quantities related to the multivariate skew-normal distribution.</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Quantities related to the multivariate skew-normal distribution.</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+msn_quantities(xi, Omega, alpha)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>xi</CODE>
+<TD>
+numeric vector giving the location parameter, of length <CODE>k</CODE>, say.
+Missing values are not allowed.
+
+<TR VALIGN=TOP><TD><CODE>Omega</CODE>
+<TD>
+a covariance matrix of size <CODE>k</CODE> by <CODE>k</CODE>.
+Missing values are not allowed.
+
+<TR VALIGN=TOP><TD><CODE>alpha</CODE>
+<TD>
+numeric vector of shape parameter of length <CODE>k</CODE>.
+Missing values are not allowed.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Computes mean vector, variance matrix and other relevant quantities
+of a given multivariate skew-normal distribution.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+The meaning of the parameters is explained in the references below,
+especially Azzalini and Capitanio (1998).<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a list containing the following components
+<P>
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>xi,</CODE>
+<TD>
+as given on input
+
+<TR VALIGN=TOP><TD><CODE>omega</CODE>
+<TD>
+vector of scale parameters
+
+<TR VALIGN=TOP><TD><CODE>mean</CODE>
+<TD>
+numeric vector representing the mean value of the distribution
+
+<TR VALIGN=TOP><TD><CODE>variance</CODE>
+<TD>
+variance matrix of the distribution
+
+<TR VALIGN=TOP><TD><CODE>Omega_con,Omega_conc</CODE>
+<TD>
+correlation matrix and concentration matrix associated to <CODE>Omega</CODE>
+
+<TR VALIGN=TOP><TD><CODE>Psi</CODE>
+<TD>
+covariance matrix of the equivalent <CODE>(lambda,Psi)</CODE> parametrization
+
+<TR VALIGN=TOP><TD><CODE>lambda,</CODE>
+<TD>
+shape parameters of the marginal distributions, in two equivalent
+forms
+
+<TR VALIGN=TOP><TD><CODE>gamma1</CODE>
+<TD>
+numeric vector with marginal indices of skewness
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. and Dalla Valle, A. (1996).
+The multivariate skew-normal distribution.
+<EM>Biometrika</EM>
+<B>83</B>, 715-726.
+<P>
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B</EM>
+<B>61</B>, part 3.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="dmsn.html">dmsn</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+a &#61 msn_quantities([0,0], eye(2), [2,3])
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>

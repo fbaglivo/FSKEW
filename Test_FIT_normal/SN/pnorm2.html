@@ -1,0 +1,51 @@
+<HEAD><TITLE>Bivariate normal integral</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Bivariate normal integral</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+pnorm2(x, y, rho)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>x</CODE>
+<TD>
+a numerical value representing the first coordinate
+
+<TR VALIGN=TOP><TD><CODE>y</CODE>
+<TD>
+a numerical value representing the second coordinate
+
+<TR VALIGN=TOP><TD><CODE>rho</CODE>
+<TD>
+a numerical value representing the correlation;
+it must be between -1 and 1.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Computes the cumulative distribution function of a bivariate
+normal distribution with standardized marginals.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+The input parameters must be all scalars.
+<P>
+This function is based on function <CODE>T_Owen</CODE>.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a numerical value with the required probability<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="T.Owen.html">T_Owen</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+p &#61 pnorm2(1.2, 0.5, 0.67)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

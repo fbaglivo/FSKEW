@@ -1,0 +1,112 @@
+<HEAD><TITLE> Profile twice loglikelihood for skew-normal models</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Profile twice loglikelihood for skew-normal models</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+sn_2logL_profile(X, y, param_range, use_cp, npts, plotit)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>y</CODE>
+<TD>
+a numeric vector. Missing values (<CODE>NaN</CODE>s) are not allowed.
+
+<TR VALIGN=TOP><TD><CODE>X</CODE>
+<TD>
+a matrix of explantory variables; must have <CODE>size(X,2)</CODE> equal to <CODE>length(y)</CODE>. Missing values (<CODE>NaN</CODE>) are not allowed.
+If <CODE>X</CODE> is missing, a one-comun matrix of 1's is created.
+
+<TR VALIGN=TOP><TD><CODE>param_range</CODE>
+<TD>
+a numeric vector of length either 2 or 4. If the length is 2,
+the dimensional parameter <CODE>d</CODE> is set to 1, and
+a 1-dimensional profile is computed and plotted, for the shape
+or skewness parameter (depending on the parametrization adopted;
+see below); in this case the two value represent the minimum
+and maximum value for the range of the parameter.
+If the length of <CODE>param_range</CODE> is 4, the first two values
+determine the range of the scale parameter, the last two give
+the range of the shape (or skewness) parameter; in this case, <CODE>d=2</CODE>. Default is <CODE>[sqrt(var(y)) .* [0.67, 1.5], -0.95, 0.95]</CODE>. 
+
+<TR VALIGN=TOP><TD><CODE>use_cp</CODE>
+<TD>
+logical value which selects the parametrization adopted.
+If <CODE>use_cp=1</CODE> (default value), the centred parametrization is used,
+otherwise the direct parametrization is adopted.
+
+<TR VALIGN=TOP><TD><CODE>npts</CODE>
+<TD>
+number of points (in the scalar case) or grid size (in the
+2-dimensional case). Default is 31/d. 
+
+<TR VALIGN=TOP><TD><CODE>plotit</CODE>
+<TD>
+logical value which determines is plotting takes place; default
+is <CODE>1</CODE>.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Computation and plot of 1-dimensional and 2-dimensional profile
+2*loglikelihood for skew-normal regression models.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+Likelihood maximization is performed by <CODE>sn_em</CODE>.
+<P>
+See the reference below for explanation of the two possible
+parametrizations.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a list containing the following components
+<P>
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>param1,param2</CODE>
+<TD>
+vectors of the paramters values where the function has been
+evaluated. If <CODE>d=2</CODE>, the second vector contains <CODE>NaN</CODE>s.
+
+<TR VALIGN=TOP><TD><CODE>param_names</CODE>
+<TD>
+a character vector of two elements with the names of the <CODE>param1</CODE>
+and <CODE>param2</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>2logL</CODE>
+<TD>
+a vector or a matrix which represents twice the profile loglikelihood;
+this is in the "relative" version, i.e. setting the maximum value to
+be 0.
+
+<TR VALIGN=TOP><TD><CODE>maximum</CODE>
+<TD>
+a numeric value with the maximum which has been subtracted to
+obtain the "relative" version of <CODE>2logL</CODE>.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Side Effects</FONT></h2>
+
+If <CODE>plotit=1</CODE>, a plot of the profile twice relative loglikeliood is
+produced on a graphical device.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B</EM>
+<B>61</B>, part 3.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="sn.em.html">sn_em</A></CODE>, <CODE><A HREF="sn.mle.html">sn_mle</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+a &#61 sn_2logL_profile(NaN,otis)
+a &#61 sn_2logL_profile(NaN,otis,NaN,0)
+a &#61 sn_2logL_profile([ones(length(lbm),1),lbm],bmi,[0,0.9],NaN,50)
+a &#61 sn_2logL_profile(NaN,frontier, [0.8,1.6,10,30],0,11)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

@@ -1,0 +1,81 @@
+<HEAD><TITLE>Cumulants and distribution of a skew-normal variate after conditioning</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Cumulants and distribution of a skew-normal variate after conditioning</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+msn_conditional(xi, Omega, alpha, fixed.comp, fixed.values)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>xi</CODE>
+<TD>
+a numeric vector of length <CODE>k</CODE>, say, giving the location parameter.
+
+<TR VALIGN=TOP><TD><CODE>Omega</CODE>
+<TD>
+a covariance matrix of dimension <CODE>(k,k)</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>alpha</CODE>
+<TD>
+a numeric vector of length <CODE>k</CODE>, which regulates the shape of the density.
+
+<TR VALIGN=TOP><TD><CODE>fixed_comp</CODE>
+<TD>
+a vector containing a subset of <CODE>1:k</CODE> which selects the components
+whose values are to be fixed; it must be of length <CODE>k-2</CODE>.
+
+<TR VALIGN=TOP><TD><CODE>fixed_values</CODE>
+<TD>
+a numeric vector of values taken on by the components <CODE>fixed_comp</CODE>;
+it must be of the same length of <CODE>fixed_comp</CODE>.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Finds cumulants up to 3rd order of a multivariate skew-normal
+distribution conditionally on the values taken on by some of
+its components, and finds a multivariate skew-normal distribution
+with the same cumulants.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+See the reference below for details and background.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a list containing the following elements:
+<P>
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>cumulants</CODE>
+<TD>
+a list containing mean vector, variance matrix, and indices of 
+skewness of the conditional distribution.
+
+<TR VALIGN=TOP><TD><CODE>fit</CODE>
+<TD>
+a list containing the parameters of the fitted skew-normal
+distribution in the <CODE>(xi,Omega,alpha)</CODE> parametrization, plus
+the vector <CODE>delta</CODE>.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">References</FONT></h2>
+
+Azzalini, A. and Capitanio, A. (1999).
+Statistical applications of the multivariate skew-normal distribution.
+<EM>J.Roy.Statist.Soc. B</EM>
+<B>61</B>, part 3.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="plot.msn.cond.html">plot_msn_cond</A></CODE><h2><FONT FACE="Courier New,Courier" COLOR="#666666">Examples</FONT></h2>
+
+<PRE>
+Omega &#61 eye(3)+0.5.*ones(3,3)
+a &#61 msn_conditional(zeros(1,3), Omega, [1:3], 3, -0.75)
+</PRE>
+
+
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+

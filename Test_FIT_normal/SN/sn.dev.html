@@ -1,0 +1,50 @@
+<HEAD><TITLE>Deviance for skew-normal distributions</TITLE></HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0" VLINK="#660066" ALINK="#FF0000" BACKGROUND="white">
+
+<h2 align=center><FONT FACE="Courier New,Courier" COLOR="#999999">Deviance for skew-normal distributions</FONT></h2>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Usage</FONT></h2>
+
+<PRE>
+sn_dev(cp, X, y, traceout)
+</PRE>
+
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Arguments</FONT></h2>
+
+<TABLE>
+<TR VALIGN=TOP><TD><CODE>cp</CODE>
+<TD>
+a vector of initial values for the centred parameters,
+with <CODE>length(cp)=size(X,2)+2</CODE>
+
+<TR VALIGN=TOP><TD><CODE>X</CODE>
+<TD>
+a matrix of explanatory variables. Missing values (<CODE>NaN</CODE>s) are not allowed.
+
+<TR VALIGN=TOP><TD><CODE>y</CODE>
+<TD>
+a vector contaning the observed variable.
+Missing values (<CODE>NaN</CODE>s) are not allowed.
+
+<TR VALIGN=TOP><TD><CODE>traceout</CODE>
+<TD>
+logical value.
+If <CODE>traceout=1</CODE>, details are printed. Default value is <CODE>0</CODE>.
+
+</TABLE>
+<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Description</FONT></h2>
+
+Computes twice the negative log-likelihood (essentially, the deviance)
+for regression models with errors having a skew-normal distribution.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Details</FONT></h2>
+
+This is the objective function of <CODE>sn_mle</CODE>, whose documentation
+gives additional details.<h2><FONT FACE="Courier New,Courier" COLOR="#666666">Value</FONT></h2>
+
+a numeric value<h2><FONT FACE="Courier New,Courier" COLOR="#666666">See Also</FONT></h2>
+
+<CODE><A HREF="sn.mle.html">sn_mle</A></CODE>, <CODE><A HREF="msn.mle.html">msn_mle</A></CODE>
+
+<p align=center><hr><div align=center><a href="00Index.html">[Package Contents]</a>
+
+</BODY></HTML>
+
