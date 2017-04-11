@@ -13,16 +13,26 @@ electrode_selected_number=1;
 
 %for t=1
     
-
+% 
 % Mu=[zeros(20000,electrode_selected_number)];
 % SIGMA=diag([ones(electrode_selected_number,1)],0);
 % Rb=mvnrnd(Mu,SIGMA);
 
-Rb=rsn(100000,4,8,100)';
+% Rb=rsn(50000,4,8,0)';
+
+%%
+
+% 
+normal=randn(1000,1);
+normal_pos=normal(find(normal>0));
+normal_sinskew=[-normal_pos' normal_pos'];
+
+Rb=normal_sinskew';
 
 fit_size=2*electrode_selected_number+sum([1:1:electrode_selected_number])+1;
 
 csvwrite(['CSV/Binding.csv'],Rb);
+
 %     csvwrite(['CSV/Features.csv'],Feat);
 %     Complete=[Bind' Feat'];
 %     csvwrite(['CSV/Complete.csv'],Complete');
@@ -33,7 +43,11 @@ csvwrite(['CSV/FitSize.csv'],fit_size);
     %!unset DYLD_LIBRARY_PATH; Rscript  skewNromalFitBind.R
     
 !Rscript skewNromalFitBindtest.R
+
+%%
 snParamBind = csvread('skewNromalFitedDataBind.csv');
+
+
 %     % snParam(snParam==-999999)=NaN;
 %     !Rscript skewNromalFitFeat.R
 %     snParamFeat = csvread('skewNromalFitedDataFeat.csv');
@@ -72,7 +86,7 @@ a=randn(100000,1);
 b=randn(100000,1);
 W(find(sqrt(alfa*alfa')*a>b))=a(find(sqrt(alfa*alfa')*a>b));
 W(find(sqrt(alfa*alfa')*a<=b))=-a(find(sqrt(alfa*alfa')*a<=b));
-H = 1/2*log((det(omega))) + 1 + log(2*pi) - mean(2*log(normcdf(sqrt(alfa*alfa')*W)));
+H = 1/2*log((det(omega))) + 1 + log(2*pi) - mean(log(2*normcdf(sqrt(alfa*alfa')*W)));
 
 %mean(2*log(normcdf(sqrt(alfa*alfa')*rsn(20000,0,1,sqrt(alfa*alfa')))))
 

@@ -2,7 +2,7 @@
 
 
 library("sn")
-setwd("C:/Users/Fabri/Documents/Documentos/PhD/Papers/EnProceso/Metodos/FSKEW/Test_FIT_normal/")
+setwd("C:/Users/Fabri/Documents/Documentos/PhD/Papers/EnProceso/Metodos/FSKEW/")
 
 file_fit<-paste("CSV/FitSize.csv",sep ="")
 fit_size_csv = read.csv(file_fit,sep=",",header=FALSE)

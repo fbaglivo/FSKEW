@@ -6,17 +6,19 @@ setenv('PATH', [getenv('PATH') ';C:\Program Files\R\R-3.3.2\bin\']);
 
 %%
 
-electrode_selected_number=[1:5:20];
+electrode_selected_number=[1:1:10];
 %%
 
+indice=1;
 for t=electrode_selected_number
     
     
-    Mu=[zeros(1000,t)];
+    
+    Mu=[zeros(10000,t)];
     SIGMA=diag([ones(t,1)],0);
     Rb=mvnrnd(Mu,SIGMA);
     
-    Mu=[ones(1000,t)];
+    Mu=[ones(10000,t)];
     Mu=Mu*5;
     SIGMA=diag([ones(t,1)],0);
 %     
@@ -66,13 +68,13 @@ for t=electrode_selected_number
         
         likelihood=snParam(end);
         
-        init=electrode_selected_number+1;
-        for i=1:electrode_selected_number %for 10 channels
+        init=t+1;
+        for i=1:t %for 10 channels
             
-            l=electrode_selected_number-i ;% #components
+            l=t-i ;% #components
             
-            omega(i,i:electrode_selected_number)=snParam(1,init:(init+l));
-            omega(i:electrode_selected_number,i)=snParam(1,init:(init+l));
+            omega(i,i:t)=snParam(1,init:(init+l));
+            omega(i:t,i)=snParam(1,init:(init+l));
             
             init=(init+l+1);
             
@@ -83,11 +85,11 @@ for t=electrode_selected_number
         b=randn(100000,1);
         W(find(sqrt(alfa*alfa')*a>b))=a(find(sqrt(alfa*alfa')*a>b));
         W(find(sqrt(alfa*alfa')*a<=b))=-a(find(sqrt(alfa*alfa')*a<=b));
-        H(n) = 1/2*log((det(omega))) + 1 + log(2*pi) - mean(log(2*normcdf(sqrt(alfa*alfa')*W)));
+        H(n) = 1/2*log((det(omega))) +  t/2*(1 + log(2*pi)) - mean(log(2*normcdf(sqrt(alfa*alfa')*W)));
         
         NoNorm(t)=H(n);
         
-        sknormBind(t)= mean(2*log(normcdf(sqrt(alfa*alfa')*W)));
+        sknormBind(t)= mean(log(2*normcdf(sqrt(alfa*alfa')*W)));
         
         %BIND
         
@@ -96,13 +98,13 @@ for t=electrode_selected_number
         
         likelihoodbind=snParamBind(end);
         
-        init=electrode_selected_number+1;
-        for i=1:electrode_selected_number
+        init=t+1;
+        for i=1:t
             
-            l=electrode_selected_number-i ;% #components
+            l=t-i ;% #components
             
-            omegaBind(i,i:electrode_selected_number)=snParamBind(1,init:(init+l));
-            omegaBind(i:electrode_selected_number,i)=snParamBind(1,init:(init+l));
+            omegaBind(i,i:t)=snParamBind(1,init:(init+l));
+            omegaBind(i:t,i)=snParamBind(1,init:(init+l));
             
             init=(init+l+1);
             
@@ -113,24 +115,24 @@ for t=electrode_selected_number
         b=randn(100000,1);
         W(find(sqrt(alfaBind*alfaBind')*a>b))=a(find(sqrt(alfaBind*alfaBind')*a>b));
         W(find(sqrt(alfaBind*alfaBind')*a<=b))=-a(find(sqrt(alfaBind*alfaBind')*a<=b));
-        HBind(n) = 1/2*log((det(omegaBind))) + 1 + log(2*pi) - mean(log(2*normcdf(sqrt(alfaBind*alfaBind')*W)));
+        HBind(n) = 1/2*log((det(omegaBind))) +  t/2*(1 + log(2*pi)) - mean(log(2*normcdf(sqrt(alfaBind*alfaBind')*W)));
         
-        BindNoNorm(t)=HBind(n);
+        BindNoNorm(indice)=HBind(n);
         
-        sknormBind(t)= mean(2*log(normcdf(sqrt(alfaBind*alfaBind')*W)));
+        sknormBind(indice)= mean(log(2*normcdf(sqrt(alfaBind*alfaBind')*W)));
         
         %FEAT
         
         alfaFeat=snParamFeat(n,alfainit:alfaend);
         
         likelihoodFeat=snParamFeat(end);
-        init=electrode_selected_number+1;
-        for i=1:electrode_selected_number %for 10 channels
+        init=t+1;
+        for i=1:t %for 10 channels
             
-            l=electrode_selected_number-i ;% #components
+            l=t-i ;% #components
             
-            omegaFeat(i,i:electrode_selected_number)=snParamFeat(1,init:(init+l));
-            omegaFeat(i:electrode_selected_number,i)=snParamFeat(1,init:(init+l));
+            omegaFeat(i,i:t)=snParamFeat(1,init:(init+l));
+            omegaFeat(i:t,i)=snParamFeat(1,init:(init+l));
             
             init=(init+l+1);
             
@@ -141,25 +143,27 @@ for t=electrode_selected_number
         b=randn(100000,1);
         W(find(sqrt(alfaFeat*alfaFeat')*a>b))=a(find(sqrt(alfaFeat*alfaFeat')*a>b));
         W(find(sqrt(alfaFeat*alfaFeat')*a<=b))=-a(find(sqrt(alfaFeat*alfaFeat')*a<=b));
-        HFeat(n) = 1/2*log((det(omegaFeat))) + 1 + log(2*pi) - mean(log(2*normcdf(sqrt(alfaFeat*alfaFeat')*W)));
+        HFeat(n) = 1/2*log((det(omegaFeat))) + t/2*(1 + log(2*pi)) - mean(log(2*normcdf(sqrt(alfaFeat*alfaFeat')*W)));
         
-        FeatNoNorm(t)=HFeat(n);
-        sknormFeat(t)= mean(log(2*normcdf(sqrt(alfaFeat*alfaFeat')*W)));
+        %%%%% FALTA EL K/2!!!! ( 1 + log(2*pi))*K/2
+        
+        FeatNoNorm(indice)=HFeat(n);
+        sknormFeat(indice)= mean(log(2*normcdf(sqrt(alfaFeat*alfaFeat')*W)));
     end
     
-    MI(t)=H - 1/2*HFeat - 1/2*HBind;
+    MI(indice)=H - 1/2*HFeat - 1/2*HBind;
     
-    HH(t)=H;
-    HHf(t)=HFeat;
-    HHb(t)=HBind;
+    HH(indice)=H;
+    HHf(indice)=HFeat;
+    HHb(indice)=HBind;
 
-
+    indice=indice+1;
 
 end
 
 %%
-
-Miprom=mean(MI);
-HHprom=mean(HH);
-HHfprom=mean(HHf);
-HHbprom=mean(HHb);
+% 
+% Miprom=mean(MI);
+% HHprom=mean(HH);
+% HHfprom=mean(HHf);
+% HHbprom=mean(HHb);
